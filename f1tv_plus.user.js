@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         F1TV+
 // @namespace    https://najdek.github.io/f1tv_plus/
-// @version      2.1.2
+// @version      2.1.2.test_20211113
 // @description  A few improvements to F1TV
 // @author       Mateusz Najdek
 // @match        https://f1tv.formula1.com/*
@@ -13,7 +13,7 @@
 (function() {
     'use strict';
 
-    var smVersion = "2.1.2";
+    var smVersion = "2.1.2.test_20211113";
     //<updateDescription></updateDescription>
 
     var smUpdateUrl = "https://raw.githubusercontent.com/najdek/f1tv_plus/master/f1tv_plus.user.js";
@@ -300,7 +300,7 @@
                     "<div id='header-links' style='padding: 10px; display: flex;'>" +
                     "<div id='header-btn-url' style='display: inline-flex; background-color: #af2020; font-size: 14px; padding: 2px 10px; border-radius: 6px; border: 1px solid #ffc0c0; cursor: pointer;'>URL</div>" +
                     "<div id='header-btn-popout' style='display: inline-flex; background-color: #af2020; font-size: 14px; padding: 2px 10px; border-radius: 6px; border: 1px solid #ffc0c0; cursor: pointer; margin-left: 10px;'>MULTI-VIEW</div>" +
-                    "<div style='display: inline-flex; align-items: center; margin-left: 20px;'><div style='font-size: 24px; font-weight: bold;'>F1TV+</div><div id='header-btn-checkupdates' style='display: inline-flex; font-size: 10px; padding: 2px 10px; cursor: pointer; margin-left: 10px; line-height: 12px; text-align: center; text-decoration: underline;'>CHECK FOR<br>UPDATES</div></div>" +
+                    "<div style='display: none; align-items: center; margin-left: 20px;'><div style='font-size: 24px; font-weight: bold;'>F1TV+</div><div id='header-btn-checkupdates' style='display: inline-flex; font-size: 10px; padding: 2px 10px; cursor: pointer; margin-left: 10px; line-height: 12px; text-align: center; text-decoration: underline;'>CHECK FOR<br>UPDATES</div></div>" +
                     "</div>" +
                     "</div>" +
                     "<div id='sm-popup-alt-container' style='user-select: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 999;'>" +
@@ -500,7 +500,7 @@
                             "<div id='sm-popout-menu-mode-selection' style='margin-top: 10px;'>" +
                             "<div style='font-size: 12px; margin: 4px;'>Select mode:</div>" +
                             "<div id='sm-popout-menu-mode-multipopout' style='display: inline-block; padding: 10px 20px; text-transform: uppercase; border: 1px solid #ff7171; border-radius: 20px 0px 0px 20px; background-color: #9a0000; cursor: pointer;'>Popouts</div>" +
-                            "<div id='sm-popout-menu-mode-onewindow' style='display: inline-block; padding: 10px 20px; text-transform: uppercase; border: 1px solid #ff7171; border-radius: 0px 20px 20px 0px; background-color: #c13636; cursor: pointer;'>Frames</div>" +
+                            "<div id='sm-popout-menu-mode-onewindow' style='display: inline-block; padding: 10px 20px; text-transform: uppercase; border: 1px solid #ff7171; border-radius: 0px 20px 20px 0px; background-color: #c13636; cursor: pointer;'>Frames (+ single popout)</div>" +
                             "</div>" +
                             "<div id='sm-popout-menu-frame-selection' style='display: none; margin-top: 10px;'>" +
                             "<div style='font-size: 12px; margin: 4px;'>Display aspect ratio:</div>" +
@@ -602,7 +602,7 @@
                                 "</div>";
                             document.getElementById("sm-popout-options-frame-16by9-list").insertAdjacentHTML("beforeend", btnHtml);
                             document.getElementById("sm-popout-menu-option-frame-16by9-" + i).addEventListener("click", function() {
-                                window.location.href = "https://" + document.location.href.split("/")[2] + smURL_EMPTYPAGE + "#f1tvplus_multipopout:" + $(this).data("i") + ":onewindow:16by9=" + $(this).data("contentid");
+                                window.location.href = "https://" + document.location.href.split("/")[2] + smURL_EMPTYPAGE + "#f1tvplus_multipopout:" + (parseInt($(this).data("i")) + 1) + ":mixed:16by9=" + $(this).data("contentid");
                             });
                             for (var popoutAmount in smFramePositions16by9[i]) {
                                 var smPopoutIconHtml = "<div style='position: absolute; left: " + smFramePositions16by9[i][popoutAmount][0] * btnWidth / 100 + "px; top: " + smFramePositions16by9[i][popoutAmount][1] * btnHeight / 100 + "px; width: " + smFramePositions16by9[i][popoutAmount][2] * btnWidth / 100 + "px; height: " + smFramePositions16by9[i][popoutAmount][3] * btnHeight / 100 + "px; background-color: #fff; border: 1px solid #000; border-radius: 2px;'></div>";
@@ -624,7 +624,7 @@
                                 "</div>";
                             document.getElementById("sm-popout-options-frame-21by9-list").insertAdjacentHTML("beforeend", btnHtml);
                             document.getElementById("sm-popout-menu-option-frame-21by9-" + i).addEventListener("click", function() {
-                                window.location.href = "https://" + document.location.href.split("/")[2] + smURL_EMPTYPAGE + "#f1tvplus_multipopout:" + $(this).data("i") + ":onewindow:21by9=" + $(this).data("contentid");
+                                window.location.href = "https://" + document.location.href.split("/")[2] + smURL_EMPTYPAGE + "#f1tvplus_multipopout:" + (parseInt($(this).data("i")) + 1) + ":mixed:21by9=" + $(this).data("contentid");
                             });
                             for (var popoutAmount in smFramePositions21by9[i]) {
                                 var smPopoutIconHtml = "<div style='position: absolute; left: " + smFramePositions21by9[i][popoutAmount][0] * btnWidth / 100 + "px; top: " + smFramePositions21by9[i][popoutAmount][1] * btnHeight / 100 + "px; width: " + smFramePositions21by9[i][popoutAmount][2] * btnWidth / 100 + "px; height: " + smFramePositions21by9[i][popoutAmount][3] * btnHeight / 100 + "px; background-color: #fff; border: 1px solid #000; border-radius: 2px;'></div>";
@@ -1062,6 +1062,26 @@
                             $("#sm-gofullscreen").hide();
                             document.getElementsByTagName("body")[0].requestFullscreen();
                         });
+                    } else if (window.location.hash.split("_")[1].split("=")[0].split(":")[2] == "mixed") {
+                        var mixedWindows = true;
+                        var oneWindow = true;
+                        var oneWindowAr = window.location.hash.split("_")[1].split("=")[0].split(":")[3];
+                        if (oneWindowAr == "16by9") {
+                            smPopupPositions = smFramePositions16by9;
+                        } else if (oneWindowAr == "21by9") {
+                            smPopupPositions = smFramePositions21by9;
+                        }
+                        var smGoFullscreenHtml = "<div id='sm-gofullscreen' style='position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1001; text-align: center;'>" +
+                            "<div style='background-color: #0000008f; width: 100%; height: 100%; top: 0; left: 0; position: absolute;'></div>" +
+                            "<div style='background-color: #c70000; color: #fff; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; border-radius: 10px; position: absolute;'>" +
+                            "<h3>Click anywhere to go fullscreen...</h3>" +
+                            "</div>" +
+                            "</div>";
+                        document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", smGoFullscreenHtml);
+                        document.getElementById("sm-gofullscreen").addEventListener("click", function() {
+                            $("#sm-gofullscreen").hide();
+                            document.getElementsByTagName("body")[0].requestFullscreen();
+                        });
                     }
 
                     var smWindowAmount = parseInt(window.location.hash.split("_")[1].split(":")[1]);
@@ -1128,17 +1148,23 @@
                         }
                     });
 
-                    if (oneWindow) {
+                    if (oneWindow && !mixedWindows) {
                         $("#sm-popup-alt-container").css("position", "absolute");
                         $("#sm-popup-alt-container").css("left", smPopupPositions[smWindowAmount][0][0] + "%");
                         $("#sm-popup-alt-container").css("top", smPopupPositions[smWindowAmount][0][1] + "%");
                         $("#sm-popup-alt-container").css("width", smPopupPositions[smWindowAmount][0][2] + "%");
                         $("#sm-popup-alt-container").css("height", smPopupPositions[smWindowAmount][0][3] + "%");
+                    } else if (oneWindow && mixedWindows) {
+                        $("#sm-popup-alt-container").css("position", "absolute");
+                        $("#sm-popup-alt-container").css("left", smPopupPositions[smWindowAmount - 1][0][0] + "%");
+                        $("#sm-popup-alt-container").css("top", smPopupPositions[smWindowAmount - 1][0][1] + "%");
+                        $("#sm-popup-alt-container").css("width", smPopupPositions[smWindowAmount - 1][0][2] + "%");
+                        $("#sm-popup-alt-container").css("height", smPopupPositions[smWindowAmount - 1][0][3] + "%");
                     }
 
                     smWindow[1] = window;
 
-                    if (oneWindow) {
+                    if (oneWindow && !mixedWindows) {
                         for (let i = 2; i <= smWindowAmount; i++) {
                             var smWindowOffsetX = smPopupPositions[smWindowAmount][i - 1][0];
                             var smWindowOffsetY = smPopupPositions[smWindowAmount][i - 1][1];
@@ -1158,6 +1184,39 @@
                                     smWindow[i].document.getElementById("sm-popup-id").innerHTML = i;
                                 }, 500);
                             });
+                        }
+                    } else if (oneWindow && mixedWindows) {
+                        for (let i = 2; i <= smWindowAmount; i++) {
+                            if (i == smWindowAmount) {
+                                smWindow[i] = window.open(document.location.href.split("_multipopout")[0] + "_popout=" + window.location.hash.split("_")[1].split("=")[1], Date.now(), "left=0,top=0,width=1280,height=720");
+                                smWindow[i].addEventListener('load', (event) => {
+                                    setTimeout(function() {
+                                        smWindow[i].document.getElementById("sm-video-primary-controls").style.display = "none";
+                                        smWindow[i].document.getElementById("sm-video-titlebar").style.display = "inline-block";
+                                        smWindow[i].document.title = "(#" + i + ") " + smWindow[i].document.getElementById("sm-video-title").innerHTML;
+                                        smWindow[i].document.getElementById("sm-popup-id").innerHTML = i;
+                                    }, 500);
+                                });
+                            } else {
+                                var smWindowOffsetX = smPopupPositions[smWindowAmount - 1][i - 1][0];
+                                var smWindowOffsetY = smPopupPositions[smWindowAmount - 1][i - 1][1];
+                                var smWindowWidth = smPopupPositions[smWindowAmount - 1][i - 1][2];
+                                var smWindowHeight = smPopupPositions[smWindowAmount - 1][i - 1][3];
+                                var frameHtml = '<iframe id="sm-frame-' + i + '" style="position: absolute; border: 0; left: ' + smWindowOffsetX + '%; top: ' + smWindowOffsetY + '%; width: ' + smWindowWidth + '%; height: ' + smWindowHeight + '%;" src="' + document.location.href.split("_multipopout")[0] + "_popout=" + window.location.hash.split("_")[1].split("=")[1] + '"></iframe>';
+                                document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", frameHtml);
+                                smWindow[i] = document.getElementById("sm-frame-" + i).contentWindow;
+
+                                smWindow[i].addEventListener('load', (event) => {
+                                    setTimeout(function() {
+                                        if (i > 1) {
+                                            smWindow[i].document.getElementById("sm-video-primary-controls").style.display = "none";
+                                            smWindow[i].document.getElementById("sm-video-titlebar").style.display = "inline-block";
+                                        }
+                                        smWindow[i].document.title = "(#" + i + ") " + smWindow[i].document.getElementById("sm-video-title").innerHTML;
+                                        smWindow[i].document.getElementById("sm-popup-id").innerHTML = i;
+                                    }, 500);
+                                });
+                            }
                         }
                     } else {
                         for (let i = 1; i <= smWindowAmount; i++) {
