@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         F1TV+
 // @namespace    https://najdek.github.io/f1tv_plus/
-// @version      3.0-test
+// @version      3.0.2-test
 // @description  A few improvements to F1TV
 // @author       Mateusz Najdek
 // @match        https://f1tv.formula1.com/*
@@ -12,8 +12,8 @@
 (function() {
     'use strict';
 
-    var smVersion = "3.0-test";
-    //<updateDescription>Update details:<br>Fixed streams not loading in popout modes</updateDescription>
+    var smVersion = "3.0.2-test";
+    //<updateDescription>Update details:<br></updateDescription>
 
     var smUpdateUrl = "https://raw.githubusercontent.com/najdek/f1tv_plus/master/f1tv_plus.user.js";
     var smSyncDataUrl = "https://raw.githubusercontent.com/najdek/f1tv_plus/master/sync_offsets.json";
@@ -58,12 +58,12 @@
         ],
         // 6 WINDOWS:
         [
-            [0, 0, 33.3, 50],
-            [33.3, 0, 33.3, 50],
-            [66.6, 0, 33.3, 50],
-            [0, 50, 33.3, 50],
-            [33.3, 50, 33.3, 50],
-            [66.6, 50, 33.3, 50]
+            [0, 0, 50, 66.666],
+            [50, 0, 50, 66.666],
+            [0, 66.666, 25, 33.333],
+            [25, 66.666, 25, 33.333],
+            [50, 66.666, 25, 33.333],
+            [75, 66.666, 25, 33.333]
         ],
         // 7 WINDOWS:
         [
@@ -147,12 +147,12 @@
         ],
         // 6 WINDOWS:
         [
-            [0, 0, 66.666, 66.666],
-            [66.666, 0, 33.333, 33.333],
-            [66.666, 33.333, 33.333, 33.333],
-            [0, 66.666, 33.333, 33.333],
-            [33.333, 66.666, 33.333, 33.333],
-            [66.666, 66.666, 33.333, 33.333]
+            [0, 12.5, 50, 50],
+            [50, 12.5, 50, 50],
+            [0, 62.5, 25, 25],
+            [25, 62.5, 25, 25],
+            [50, 62.5, 25, 25],
+            [75, 62.5, 25, 25]
         ],
         // 7 WINDOWS:
         [],
@@ -221,12 +221,12 @@
         ],
         // 6 WINDOWS:
         [
-            [0, 5, 33.333, 45],
-            [33.333, 5, 33.333, 45],
-            [66.666, 5, 33.333, 45],
-            [0, 50, 33.333, 45],
-            [33.333, 50, 33.333, 45],
-            [66.666, 50, 33.333, 45]
+            [0, 0, 50, 66.666],
+            [50, 0, 50, 66.666],
+            [0, 66.666, 25, 33.333],
+            [25, 66.666, 25, 33.333],
+            [50, 66.666, 25, 33.333],
+            [75, 66.666, 25, 33.333]
         ],
         // 7 WINDOWS:
         [
@@ -282,7 +282,7 @@
         if (window.location.hash.split("_")[1].split("=")[0] == "popout" ||
             window.location.hash.split("_")[1].split("=")[0].split(":")[0] == "multipopout") {
             var smHtml = "<div id='sm-popup-id' style='display: none;'>0</div>" +
-                "<div style='position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 999;'>" +
+                "<div class='sm-bg' style='position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 999;'>" +
                 "<img style='display: block; margin: 50vh auto auto auto; transform: translateY(-50%);' src='https://f1tv.formula1.com/static/3adbb5b25a6603f282796363a74f8cf3.png'>" +
                 "</div>" +
                 "<style>" +
@@ -321,7 +321,7 @@
 
                 document.getElementById("sm-popup-id").innerHTML = 1;
                 document.title = "(#1)";
-                var smSettingsFrameHtml = "<div id='sm-offset-settings-btn' class='sm-autohide' style='background-color: #000000aa; color: #fff; font-size: 12px; padding: 8px 16px; border-radius: 0px 0px 20px 20px; position: fixed; top: 0; left: 5%; cursor: pointer; z-index: 1004;'>SYNC MENU</div>" +
+                var smSettingsFrameHtml = "<div id='sm-offset-settings-btn' class='sm-autohide' style='background-color: #000000aa; color: #fff; font-size: 12px; padding: 8px 16px; border-radius: 0px 0px 20px 20px; position: fixed; top: 0; left: 5%; cursor: pointer; z-index: 1004; display: none;'>SYNC MENU</div>" +
                     "<div id='sm-offset-settings' style='padding: 10px; position: fixed; top: 0; left: 0; background-color: #000; border-radius: 0px 0px 20px; display: none; z-index: 1005;'>" +
                     "<div id='sm-offset-settings-close-btn' style='text-align: right; font-size: 20px; cursor: pointer;'>[x]</div>" +
                     "<div id='sm-offset-settings-msg-top' style='margin: 10px 0px;'></div>" +
@@ -349,6 +349,7 @@
                     "body { background-color: #000; color: #fff; font-family: Arial; margin: 0; }" +
                     "td,th { padding: 4px 20px; }" +
                     "#sm-offset-settings-msg-top p { padding: 10px; border-radius: 10px; font-size: 14px; background-color: #ffef5b; color: #000; }" +
+                    "#app:hover ~ #sm-offset-settings-btn, .sm-bg:hover ~ #sm-offset-settings-btn, #sm-offset-settings-btn:hover { display: block !important; }" +
                     "</style>";
 
                 var smWindow = [];
@@ -381,6 +382,18 @@
                     }
                 });
 
+                var smAllWindowExtraHtml =  "<style>" +
+                    ".bmpui-ui-piptogglebutton, .bmpui-ui-airplaytogglebutton, .bmpui-ui-casttogglebutton, .bmpui-ui-vrtogglebutton { display: none; }" +
+                    "</style>";
+
+                var smMainWindowExtraHtml = "";
+
+                var smSecondaryWindowExtraHtml = "<style>" +
+                    ".bmpui-ui-rewindbutton, .bmpui-ui-playbacktogglebutton, .bmpui-ui-forwardbutton, .bmpui-controlbar-top, .bmpui-ui-hugeplaybacktogglebutton { display: none; }" +
+                    "</style>";
+
+                document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", smAllWindowExtraHtml + smMainWindowExtraHtml);
+
                 if (oneWindow) {
                     $(".inset-video-item-image-container").css("left", smPopupPositions[smWindowAmount][0][0] + "%");
                     $(".inset-video-item-image-container").css("top", smPopupPositions[smWindowAmount][0][1] + "%");
@@ -405,16 +418,17 @@
                             document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", frameHtml);
                             smWindow[i] = document.getElementById("sm-frame-" + i).contentWindow;
                             smWindow[i].addEventListener('load', (event) => {
-                                setTimeout(function() {
-                                    if (i > 1) {
-                                        /*
-                                        smWindow[i].document.getElementById("sm-video-primary-controls").style.display = "none";
-                                        smWindow[i].document.getElementById("sm-video-titlebar").style.display = "inline-block";
-                                        */
+                                (function onWindowLoad() {
+                                    if (smWindow[i].document.getElementsByTagName("video")[0]) {
+                                        console.log("video found!");
+                                        smWindow[i].document.getElementsByTagName("video")[0].muted = true;
+                                        smWindow[i].document.title = "(#" + i + ")"; // + smWindow[i].document.getElementById("sm-video-title").innerHTML;
+                                        smWindow[i].document.getElementById("sm-popup-id").innerHTML = i;
+                                        smWindow[i].document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", smAllWindowExtraHtml + smSecondaryWindowExtraHtml);
+                                    } else {
+                                        setTimeout(onWindowLoad, 100);
                                     }
-                                    smWindow[i].document.title = "(#" + i + ")"; // + smWindow[i].document.getElementById("sm-video-title").innerHTML;
-                                    smWindow[i].document.getElementById("sm-popup-id").innerHTML = i;
-                                }, 500);
+                                })();
                             });
                         }
 
@@ -489,14 +503,19 @@
                             smWindow[i] = window.open(document.location.href.split("_multipopout")[0] + "_popout=" + window.location.hash.split("_")[1].split("=")[1], Date.now(), "left=" + smWindowOffsetX + ",top=" + smWindowOffsetY + ",width=" + smWindowWidth + ",height=" + smWindowHeight);
                         }
                         smWindow[i].addEventListener('load', (event) => {
-                            setTimeout(function() {
-                                if (i > 1) {
-                                    smWindow[i].document.getElementByTagName("video")[0].muted = true;
+                            (function onWindowLoad() {
+                                if (smWindow[i].document.getElementsByTagName("video")[0]) {
+                                    console.log("video found!");
+                                    if (i > 1) {
+                                        smWindow[i].document.getElementsByTagName("video")[0].muted = true;
+                                        smWindow[i].document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", smAllWindowExtraHtml + smSecondaryWindowExtraHtml);
+                                    }
+                                    smWindow[i].document.title = "(#" + i + ")";// + smWindow[i].document.getElementById("sm-video-title").innerHTML;
+                                    smWindow[i].document.getElementById("sm-popup-id").innerHTML = i;
+                                } else {
+                                    setTimeout(onWindowLoad, 100);
                                 }
-                                smWindow[i].document.title = "(#" + i + ")";// + smWindow[i].document.getElementById("sm-video-title").innerHTML;
-                                smWindow[i].document.getElementById("sm-popup-id").innerHTML = i;
-                            }, 2000);
-
+                            })();
 
                         });
                     }
@@ -509,6 +528,7 @@
                 }
 
                 function smResumeAllWhenReady() {
+                    var smResumeRetryCount = 0;
                     var smReadyCheck = setInterval(function() {
                         var smNotReady = 0;
 
@@ -524,6 +544,20 @@
                             document.getElementById("sm-sync-status-text").innerHTML = "";
                             clearInterval(smReadyCheck);
                         }
+
+                        // DIRTY FIX:
+                        // Simulates click on seek-backward button if syncing takes longer than 2 seconds.
+                        // This fixes Bitmovin player sometimes not buffering video after setting it's currentTime value.
+                        // Might cause issues on slow internet connections.
+                        smResumeRetryCount += 1;
+                        if (smResumeRetryCount == 20) {
+                            for (let i = 2; i <= smWindowAmount; i++) {
+                                var savedTime = smWindow[i].document.getElementsByTagName("video")[0].currentTime;
+                                smWindow[i].document.getElementsByClassName("bmpui-ui-rewindbutton")[0].click();
+                                smWindow[i].document.getElementsByTagName("video")[0].currentTime = savedTime;
+                            }
+                        }
+
                     }, 100);
                 }
 
@@ -533,7 +567,6 @@
                     var timeDiff = [];
                     var smSynced = 0;
 
-                    console.log("sync l");
                     for (let i = 1; i <= smWindowAmount; i++) {
                         if (typeof smWindow[i].document.getElementsByTagName("video")[0] == 'undefined') {
                             return;
@@ -562,7 +595,7 @@
                         offset[i] = parseInt(document.getElementById("sm-offset-" + i).value) / 1000 || 0;
                         var streamId = smWindow[i].window.location.href.split("/")[4];
                         //var name = smWindow[i].document.getElementById("bitmovinplayer-video-slave-embeddedPlayer").dataset.name;
-                        var name = smWindow[i].document.getElementsByClassName("bmpui-label-metadata-title")[0].innerHTML;
+                        var name = smWindow[i].document.getElementsByClassName("bmpui-label-metadata-title")[0].innerHTML.toLowerCase().replace(" ", "_");
                         if (smSyncData.videos[streamId]) {
                             if ((document.getElementById("sm-offset-" + i).value == "") && (smSyncData.videos[streamId].values[name])) {
                                 var smSyncValue = smSyncData.videos[streamId].values[name];
@@ -627,12 +660,10 @@
 
         function smLoad() {
             var smBtnHtml = "<div id='sm-menu' style='display: none;'>" +
-                "<a id='sm-btn-url' role='button' class='btn btn--transparent' style='color: #000; margin: 6px;' title='Get stream URL'>" +
-                "<span style='display: inline-block; font-size: 12px;'>URL</span></a>" +
                 "<a id='sm-btn-popup' role='button' class='btn btn--transparent' style='color: #000; margin: 6px;' title='Open popout'>" +
                 "<span style='display: inline-block; font-size: 12px;'>POPOUT</span></a>" +
                 "<a id='sm-btn-popups' role='button' class='btn btn--transparent' style='color: #000; margin: 6px;' title='Open multiple synchronized popout videos'>" +
-                "<span style='display: inline-block; font-size: 12px;'>MULTI-POPOUT</span></a>" +
+                "<span style='display: inline-block; font-size: 12px;'>MULTI-VIEW</span></a>" +
                 "<a id='sm-btn-theater' role='button' class='btn btn--transparent' style='color: #000; margin: 6px;' title='Toggle theater mode'>" +
                 "<span style='display: inline-block; font-size: 12px;'>THEATER</span></a>" +
                 "</div>" +
@@ -701,7 +732,7 @@
             });
 
             document.getElementById("sm-btn-popup").addEventListener("click", function() {
-                window.open(document.location.href.replace("action=play", "") + "#sm-popup", Date.now(), "width=1280,height=720");
+                window.open(document.location.href.replace("action=play", "") + "#f1tvplus_popout", Date.now(), "width=1280,height=720");
                 $("video").trigger("pause");
             });
 
@@ -762,7 +793,7 @@
                 });
                 // popout list
                 for (var i in smPopupPositions) {
-                    if (i == 0) {
+                    if (i < 2) {
                         continue;
                     }
                     var btnWidth = 112;
@@ -774,15 +805,11 @@
                         "</div>";
                     document.getElementById("sm-popout-options-list").insertAdjacentHTML("beforeend", btnHtml);
                     document.getElementById("sm-popout-menu-option-" + i).addEventListener("click", function() {
-                        if ($(this).data("i") == 1) {
-                            window.open(window.location.href.split("#")[0] + "#f1tvplus_popout", Date.now(), "width=1280,height=720");
-                        } else {
-                            var smWindowOffsetX = Math.round(smPopupPositions[$(this).data("i")][0][0] * screen.availWidth / 100);
-                            var smWindowOffsetY = Math.round(smPopupPositions[$(this).data("i")][0][1] * screen.availHeight / 100);
-                            var smWindowWidth = Math.round(smPopupPositions[$(this).data("i")][0][2] * screen.availWidth / 100) - BROWSER_USED_WIDTH;
-                            var smWindowHeight = Math.round(smPopupPositions[$(this).data("i")][0][3] * screen.availHeight / 100) - BROWSER_USED_HEIGHT;
-                            window.open(window.location.href.split("#")[0] + "#f1tvplus_multipopout:" + $(this).data("i") + "=" + $(this).data("contentid"), Date.now(), "left=" + smWindowOffsetX + ",top=" + smWindowOffsetY + ",width=" + smWindowWidth + ",height=" + smWindowHeight);
-                        }
+                        var smWindowOffsetX = Math.round(smPopupPositions[$(this).data("i")][0][0] * screen.availWidth / 100);
+                        var smWindowOffsetY = Math.round(smPopupPositions[$(this).data("i")][0][1] * screen.availHeight / 100);
+                        var smWindowWidth = Math.round(smPopupPositions[$(this).data("i")][0][2] * screen.availWidth / 100) - BROWSER_USED_WIDTH;
+                        var smWindowHeight = Math.round(smPopupPositions[$(this).data("i")][0][3] * screen.availHeight / 100) - BROWSER_USED_HEIGHT;
+                        window.open(window.location.href.split("#")[0] + "#f1tvplus_multipopout:" + $(this).data("i") + "=" + $(this).data("contentid"), Date.now(), "left=" + smWindowOffsetX + ",top=" + smWindowOffsetY + ",width=" + smWindowWidth + ",height=" + smWindowHeight);
                         $("video").trigger("pause");
                         var smHtml = "<div style='position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; text-align: center; background-color: #000; font-family: Arial;'>" +
                             "<div style='color: #ccc; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; border-radius: 10px; position: absolute;'>" +
