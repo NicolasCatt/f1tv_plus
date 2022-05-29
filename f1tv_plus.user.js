@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         F1TV+
 // @namespace    https://najdek.github.io/f1tv_plus/
-// @version      3.0.2-test
+// @version      3.0.2-test2
 // @description  A few improvements to F1TV
 // @author       Mateusz Najdek
 // @match        https://f1tv.formula1.com/*
@@ -12,11 +12,13 @@
 (function() {
     'use strict';
 
-    var smVersion = "3.0.2-test";
-    //<updateDescription>Update details:<br></updateDescription>
+    var smVersion = "3.0.2-test2";
+    //<updateDescription></updateDescription>
 
     var smUpdateUrl = "https://raw.githubusercontent.com/najdek/f1tv_plus/master/f1tv_plus.user.js";
     var smSyncDataUrl = "https://raw.githubusercontent.com/najdek/f1tv_plus/master/sync_offsets.json";
+
+    var SHOW_RAM_USAGE = true;
 
     //// SETTINGS FOR MULTI-POPOUT MODE ////
     var BROWSER_USED_HEIGHT = 70; // height [px] of window that is used by browser/system (title bar, url bar, etc) | Default value: 70
@@ -929,6 +931,19 @@
             }, 500);
         }());
 
+    }
+
+    if (SHOW_RAM_USAGE) {
+        setInterval(function() {
+            var smHtml = "<div id='memory-usage' style='background-color: #333; color: #ccc; padding: 1px 4px; opacity: 0.5; position: fixed; top: 0; right: 0; display: block; z-index: 1000;'>" +
+                "RAM used: " + (Math.round(window.performance.memory.usedJSHeapSize/1000000000 * 100) / 100) + " GB" +
+                "</div>";
+            if (document.getElementById("memory-usage")) {
+                document.getElementById("memory-usage").outerHTML = smHtml;
+            } else {
+                document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", smHtml);
+            }
+        }, 1000);
     }
 
 })();
